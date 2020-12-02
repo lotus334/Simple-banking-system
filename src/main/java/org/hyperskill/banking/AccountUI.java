@@ -1,9 +1,8 @@
 package org.hyperskill.banking;
 
-import org.hyperskill.banking.account_actions.AccountAction;
-import org.hyperskill.banking.input_output.Input;
-import org.hyperskill.banking.input_output.Output;
-import org.hyperskill.banking.user_actions.UserAction;
+import org.hyperskill.banking.actions.Action;
+import org.hyperskill.banking.io.Input;
+import org.hyperskill.banking.io.Output;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class AccountUI {
         this.out = out;
     }
 
-    public void init(Input input, Account account, List<AccountAction> actions) {
+    public void init(Input input, Account account, List<Action> actions) {
         boolean run = true;
         int select;
         while (run) {
@@ -24,7 +23,7 @@ public class AccountUI {
                 out.println("Wrong input, you can select: 0..." + (actions.size() - 1));
                 continue;
             }
-            AccountAction action;
+            Action action;
             if (select == 0) {
                 action = actions.get(actions.size() - 1);
             } else {
@@ -34,7 +33,7 @@ public class AccountUI {
         }
     }
 
-    private void showMenu(List<AccountAction> actions) {
+    private void showMenu(List<Action> actions) {
         for (int index = 0; index < actions.size() - 1; index++) {
             out.println((index + 1) + ". " + actions.get(index).name());
         }

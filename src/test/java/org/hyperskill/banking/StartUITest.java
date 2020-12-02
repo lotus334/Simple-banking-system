@@ -1,14 +1,12 @@
 package org.hyperskill.banking;
 
-import org.hyperskill.banking.account_actions.AccountAction;
-import org.hyperskill.banking.input_output.Input;
-import org.hyperskill.banking.input_output.Output;
-import org.hyperskill.banking.input_output.StubInput;
-import org.hyperskill.banking.input_output.StubOutput;
-import org.hyperskill.banking.user_actions.CreateAction;
-import org.hyperskill.banking.user_actions.ExitAction;
-import org.hyperskill.banking.user_actions.LogIntoAction;
-import org.hyperskill.banking.user_actions.UserAction;
+import org.hyperskill.banking.actions.Action;
+import org.hyperskill.banking.actions.ExitAction;
+import org.hyperskill.banking.io.Input;
+import org.hyperskill.banking.io.Output;
+import org.hyperskill.banking.io.StubInput;
+import org.hyperskill.banking.io.StubOutput;
+import org.hyperskill.banking.actions.user.LogIntoAction;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -25,7 +23,7 @@ public class StartUITest {
                 new String[] {"2", "0"}
         );
         Storage storage = new Storage();
-        List<UserAction> actions = Arrays.asList(
+        List<Action> actions = Arrays.asList(
                 new ExitAction()
         );
         new StartUI(out).init(in, storage, actions);
@@ -45,7 +43,7 @@ public class StartUITest {
                 new String[] {"0"}
         );
         Storage storage = new Storage();
-        List<UserAction> actions = Arrays.asList(
+        List<Action> actions = Arrays.asList(
                 new ExitAction()
         );
         new StartUI(out).init(in, storage, actions);
@@ -60,7 +58,7 @@ public class StartUITest {
         Storage storage = new Storage();
         Account account = new Account();
         storage.add(account);
-        List<UserAction> actions = Arrays.asList(
+        List<Action> actions = Arrays.asList(
                 new LogIntoAction(out),
                 new ExitAction()
         );
@@ -91,7 +89,7 @@ public class StartUITest {
         Storage storage = new Storage();
         Account account1 = new Account();
         storage.add(account1);
-        List<UserAction> actions = Arrays.asList(
+        List<Action> actions = Arrays.asList(
                 new LogIntoAction(out),
                 new ExitAction()
         );

@@ -1,17 +1,17 @@
-package org.hyperskill.banking.user_actions;
+package org.hyperskill.banking.actions.user;
 
 import org.hyperskill.banking.*;
-import org.hyperskill.banking.account_actions.AccountAction;
-import org.hyperskill.banking.account_actions.BalanceAction;
-import org.hyperskill.banking.account_actions.ExitAction;
-import org.hyperskill.banking.account_actions.LogOutAction;
-import org.hyperskill.banking.input_output.Input;
-import org.hyperskill.banking.input_output.Output;
+import org.hyperskill.banking.actions.Action;
+import org.hyperskill.banking.actions.account.BalanceAction;
+import org.hyperskill.banking.actions.ExitAction;
+import org.hyperskill.banking.actions.account.LogOutAction;
+import org.hyperskill.banking.io.Input;
+import org.hyperskill.banking.io.Output;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class LogIntoAction implements UserAction {
+public class LogIntoAction<T> implements Action<T> {
     private final Output out;
 
     public LogIntoAction(Output out) {
@@ -24,13 +24,14 @@ public class LogIntoAction implements UserAction {
     }
 
     @Override
-    public boolean execute(Input input, Storage storage) {
+    public boolean execute(Input input, T t) {
         String number = input.askStr("Enter your card number:\n");
         String pin = input.askStr("Enter your PIN:\n");
+        Storage storage = (Storage) t;
         var account = storage.logIntoAccount(number, pin);
         if (account.isPresent()) {
             out.println("You have successfully logged in!");
-            List<AccountAction> actions = Arrays.asList(
+            List<Action> actions = Arrays.asList(
                     new BalanceAction(out),
                     new LogOutAction(out),
                     new ExitAction()

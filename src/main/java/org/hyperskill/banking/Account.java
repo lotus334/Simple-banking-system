@@ -4,8 +4,8 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Account {
-    private String number;
-    private String pin;
+    private final String number;
+    private final String pin;
     private int balance;
 
     public Account() {
@@ -41,16 +41,20 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "number='" + number + '\'' +
-                ", pin='" + pin + '\'' +
-                '}';
+        return "Account{"
+                + "number='" + number + '\''
+                + ", pin='" + pin + '\''
+                + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Account account = (Account) o;
         return Objects.equals(getNumber(), account.getNumber());
     }
