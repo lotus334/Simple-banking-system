@@ -6,14 +6,15 @@ import org.hyperskill.banking.io.Output;
 
 import java.util.List;
 
-public class StartUI {
+public class StartUI<T> {
     private final Output out;
 
     public StartUI(Output out) {
         this.out = out;
     }
 
-    public void init(Input input, Storage storage, List<Action> actions) {
+    public boolean init(Input input, T t, List<Action> actions) {
+        boolean runMain = true;
         boolean run = true;
         int select;
         while (run) {
@@ -26,11 +27,13 @@ public class StartUI {
             Action action;
             if (select == 0) {
                 action = actions.get(actions.size() - 1);
+                runMain = false;
             } else {
                 action = actions.get(select - 1);
             }
-            run = action.execute(input, storage);
+            run = action.execute(input, t);
         }
+        return runMain;
     }
 
     private void showMenu(List<Action> actions) {

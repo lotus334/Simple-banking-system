@@ -36,7 +36,8 @@ public class LogIntoAction<T> implements Action<T> {
                     new LogOutAction(out),
                     new ExitAction()
             );
-            new AccountUI(out).init(input, account.get(), actions);
+            var acc = account.get();
+            return new StartUI(out).init(input, acc, actions);
 
         } else {
             out.println("Wrong card number or PIN!");

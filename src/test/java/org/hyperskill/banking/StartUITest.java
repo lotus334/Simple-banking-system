@@ -67,8 +67,8 @@ public class StartUITest {
                         "1",
                         account.getNumber(),
                         account.getPin(),
-                        "0",
-                        "0"}
+                        "0"
+                }
         );
         new StartUI(out).init(in, storage, actions);
         assertThat(out.toString(), is(
@@ -77,8 +77,6 @@ public class StartUITest {
                         + "You have successfully logged in!" + System.lineSeparator()
                         + "1. Balance" + System.lineSeparator()
                         + "2. Log out" + System.lineSeparator()
-                        + "0. Exit" + System.lineSeparator()
-                        + "1. Log into account" + System.lineSeparator()
                         + "0. Exit" + System.lineSeparator()
         ));
     }
