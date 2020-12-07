@@ -4,6 +4,7 @@ import org.hyperskill.banking.StartUI;
 import org.hyperskill.banking.actions.Action;
 import org.hyperskill.banking.actions.ExitAction;
 import org.hyperskill.banking.actions.account.AddIncomeAction;
+import org.hyperskill.banking.actions.account.CloseAccountAction;
 import org.hyperskill.banking.io.*;
 import org.junit.Test;
 import org.junit.Before;
@@ -85,7 +86,8 @@ public class ActionsTest {
                 String.format("You have successfully logged in!"
                                 + "1. Balance"
                                 + "2. Add income"
-                                + "3. Log out"
+                                + "3. Close account"
+                                + "4. Log out"
                                 + "0. Exit"
                 ).replaceAll("[\\s]", "")
         ));
@@ -114,7 +116,7 @@ public class ActionsTest {
         Input in = new StubInput(
                 new String[] {"4000007084312666",
                         "3367",
-                        "3"}
+                        "4"}
         );
 
         new LogIntoAction(out).execute(in, dataSource);
@@ -123,7 +125,8 @@ public class ActionsTest {
                 String.format("You have successfully logged in!"
                         + "1. Balance"
                         + "2. Add income"
-                        + "3. Log out"
+                        + "3. Close account"
+                        + "4. Log out"
                         + "0. Exit"
                         + "You have successfully logged out!"
                 ).replaceAll("[\\s]", "")
@@ -132,7 +135,7 @@ public class ActionsTest {
 
     @Test
     public void addIncomeValid() {
-        String idForCheck = "1";
+        String idForCheck = "2";
         String incomeForCheck = "900";
         String balance = null;
 
@@ -165,5 +168,40 @@ public class ActionsTest {
         }
 
         assertThat(incomeForCheck, is(balance));
+    }
+
+    @Test
+    public void closeAccountValid() {
+        String idForCheck = "1";
+        String balance = null;
+
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {
+                        }
+        );
+
+        var map = new HashMap<>(Map.of("id", idForCheck));
+
+        new CloseAccountAction(out, dataSource).execute(in, map);
+
+        try (Connection con = dataSource.getConnection()){
+            String insert = "SELECT * FROM card WHERE id = ?;";
+
+            try (PreparedStatement preparedStatement = con.prepareStatement(insert)){
+                preparedStatement.setString(1, idForCheck);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()){
+                    balance = String.valueOf(resultSet.getInt("balance"));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        assertThat(null, is(balance));
     }
 }

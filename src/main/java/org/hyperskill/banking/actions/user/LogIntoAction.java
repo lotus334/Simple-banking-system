@@ -5,6 +5,7 @@ import org.hyperskill.banking.actions.Action;
 import org.hyperskill.banking.actions.account.AddIncomeAction;
 import org.hyperskill.banking.actions.account.BalanceAction;
 import org.hyperskill.banking.actions.ExitAction;
+import org.hyperskill.banking.actions.account.CloseAccountAction;
 import org.hyperskill.banking.actions.account.LogOutAction;
 import org.hyperskill.banking.io.Input;
 import org.hyperskill.banking.io.Output;
@@ -71,6 +72,7 @@ public class LogIntoAction<T> implements Action<T> {
             List<Action> actions = Arrays.asList(
                     new BalanceAction(out),
                     new AddIncomeAction(out, dataSource),
+                    new CloseAccountAction(out, dataSource),
                     new LogOutAction(out),
                     new ExitAction()
             );
