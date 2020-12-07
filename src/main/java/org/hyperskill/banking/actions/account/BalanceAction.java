@@ -5,6 +5,8 @@ import org.hyperskill.banking.actions.Action;
 import org.hyperskill.banking.io.Input;
 import org.hyperskill.banking.io.Output;
 
+import java.util.Map;
+
 public class BalanceAction<T> implements Action<T> {
     private final Output out;
 
@@ -19,8 +21,8 @@ public class BalanceAction<T> implements Action<T> {
 
     @Override
     public boolean execute(Input input, T t) {
-        Account acc = (Account) t;
-        out.println("Balance: " + acc.getBalance());
+        var map = (Map<?, ?>) t;
+        out.println("Balance: " + map.get("balance"));
         return true;
     }
 }

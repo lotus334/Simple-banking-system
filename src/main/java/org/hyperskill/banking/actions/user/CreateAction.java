@@ -1,10 +1,12 @@
 package org.hyperskill.banking.actions.user;
 
-
 import org.hyperskill.banking.*;
 import org.hyperskill.banking.actions.Action;
 import org.hyperskill.banking.io.Input;
 import org.hyperskill.banking.io.Output;
+import org.sqlite.SQLiteDataSource;
+
+import java.sql.*;
 
 public class CreateAction<T> implements Action<T> {
     private final Output out;
@@ -21,8 +23,24 @@ public class CreateAction<T> implements Action<T> {
     @Override
     public boolean execute(Input input, T t) {
         Account account = new Account();
-        Storage storage = (Storage) t;
-        storage.add(account);
+
+        SQLiteDataSource dataSource = (SQLiteDataSource) t;
+
+        try (Connection con = dataSource.getConnection()){
+            String insert = "INSERT INTO card(number, pin, balance) VALUES (?, ?, ?)";
+
+            try (PreparedStatement preparedStatement = con.prepareStatement(insert)){
+                preparedStatement.setString(1, account.getNumber());
+                preparedStatement.setString(2, account.getPin());
+                preparedStatement.setNull(3, Types.INTEGER);
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         out.println("Your card has been created\n"
                 + "Your card number:\n"
                 + account.getNumber() + "\n"
