@@ -2,11 +2,8 @@ package org.hyperskill.banking.actions.user;
 
 import org.hyperskill.banking.*;
 import org.hyperskill.banking.actions.Action;
-import org.hyperskill.banking.actions.account.AddIncomeAction;
-import org.hyperskill.banking.actions.account.BalanceAction;
+import org.hyperskill.banking.actions.account.*;
 import org.hyperskill.banking.actions.ExitAction;
-import org.hyperskill.banking.actions.account.CloseAccountAction;
-import org.hyperskill.banking.actions.account.LogOutAction;
 import org.hyperskill.banking.io.Input;
 import org.hyperskill.banking.io.Output;
 import org.sqlite.SQLiteDataSource;
@@ -61,17 +58,19 @@ public class LogIntoAction<T> implements Action<T> {
             e.printStackTrace();
         }
 
-        Map<String, String> map = new HashMap<>(Map.of(
-                "id", id,
-                "number", number,
-                "pin", pin,
-                "balance", balance));
-
         if (number != null && pin != null && pin.equals(enteredPin)) {
             out.println("You have successfully logged in!");
+
+            Map<String, String> map = new HashMap<>(Map.of(
+                    "id", id,
+                    "number", number,
+                    "pin", pin,
+                    "balance", balance));
+
             List<Action> actions = Arrays.asList(
                     new BalanceAction(out),
                     new AddIncomeAction(out, dataSource),
+                    new DoTransferAction(out, dataSource),
                     new CloseAccountAction(out, dataSource),
                     new LogOutAction(out),
                     new ExitAction()

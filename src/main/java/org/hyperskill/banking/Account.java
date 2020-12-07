@@ -1,5 +1,7 @@
 package org.hyperskill.banking;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -19,7 +21,7 @@ public class Account {
             builderNumber.append(random.nextInt(10));
         }
         pin = builderPin.toString();
-        number = builderNumber.toString();
+        number = LuhnAlgorithm.createNumber(builderNumber.toString());
         balance = 0;
     }
 
@@ -33,10 +35,6 @@ public class Account {
 
     public int getBalance() {
         return balance;
-    }
-
-    public void setBalance(int balance) {
-        this.balance = balance;
     }
 
     @Override
