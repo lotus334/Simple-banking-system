@@ -32,7 +32,7 @@ public class AddIncomeAction<T> implements Action<T> {
         int newBalance = Integer.parseInt(map.get("balance")) + income;
 
         try (Connection con = dataSource.getConnection()){
-            String insert = "UPDATE card SET balance = ? WHERE number = '" + map.get("number") + "';";
+            String insert = "UPDATE card SET balance = ? WHERE id = '" + map.get("id") + "';";
 
             try (PreparedStatement preparedStatement = con.prepareStatement(insert)){
                 preparedStatement.setInt(1, newBalance);
