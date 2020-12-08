@@ -1,4 +1,4 @@
-package org.hyperskill.banking.input_output;
+package org.hyperskill.banking.io;
 
 public class StubOutput implements Output {
     private final StringBuilder buffer = new StringBuilder();

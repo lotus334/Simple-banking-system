@@ -1,4 +1,4 @@
-package org.hyperskill.banking.input_output;
+package org.hyperskill.banking.io;
 
 public interface Output {
     void println(Object obj);
